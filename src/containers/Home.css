@@ -3,6 +3,8 @@
   justify-content: center; /* Center the children horizontally */
   align-items: center; /* Center the children vertically */
   height: 100vh; /* Take full viewport height */
+  background-color: hsl(340, 2.52%, 53.33%);
+  margin: 0;
 }
 .child {
   width: 33.3%; /* Set the width of each child div */

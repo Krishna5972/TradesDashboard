@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
+import TodaysStatistics from "../components/TodaysStatistics/TodaysStatistics";
+import { fetchPositionHistory } from "../services/api";
+import { filterTodaysTrades } from "../utils/dateUtils";
+import Last14Days from "../components/Last14Days/Last14Days";
 
 function Home() {
+  const [positionHistory, setPositionHistory] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const fetchedPositionHistory = await fetchPositionHistory();
+      setPositionHistory(fetchedPositionHistory);
+    };
+
+    getData();
+  }, []);
+
   return (
     <>
       <div class="container">
@@ -22,13 +37,14 @@ function Home() {
         </div>
 
         <div class="child">
-          3<div class="inner-child-right">Last 14 days bar graph</div>
+          3
+          <div class="inner-child-right">
+            <Last14Days positionHistory={positionHistory} />
+          </div>
           <div class="inner-child-right">
             Todays statistics
             <div class="todays-statistics">
-              <div class="todays-statistics-deep-dive">Trades Taken</div>
-              <div class="todays-statistics-deep-dive">PNL</div>
-              <div class="todays-statistics-deep-dive">Win percentage</div>
+              <TodaysStatistics positionHistory={positionHistory} />
             </div>
           </div>
           <div class="inner-child-right">Open Positions</div>
